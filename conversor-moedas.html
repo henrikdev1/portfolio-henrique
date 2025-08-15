@@ -1,217 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversor de Moedas Avançado</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #0d0d0d;
-        color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    header {
-        padding: 30px 20px;
-        text-align: center;
-    }
-    h1 {
-        color: #00ff99;
-        font-size: 2rem;
-        margin-bottom: 5px;
-    }
-    p.subtitle {
-        color: #bbb;
-        margin: 0;
-    }
-    main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
-    .card {
-        background: #1a1a1a;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    input, select, button {
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0;
-        font-size: 1em;
-        border-radius: 6px;
-        border: none;
-        outline: none;
-    }
-    input, select {
-        background: #262626;
-        color: #fff;
-    }
-    button {
-        background-color: #00ff99;
-        color: #000;
-        font-weight: bold;
-        transition: background 0.2s ease;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #00cc77;
-    }
-    h2#resultado {
-        margin-top: 15px;
-        color: #00ff99;
-        font-size: 1.5rem;
-    }
-    p#cotacao {
-        font-size: 0.9rem;
-        color: #bbb;
-    }
-    footer {
-        background: #000;
-        padding: 12px;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #aaa;
-    }
-    footer a {
-        color: #00ff99;
-        text-decoration: none;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Moedas Avançado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 0px 15px rgba(0,255,100,0.5);
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #00ff88;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00ffaa;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .erro {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<header>
-    <h1>💱 Conversor de Moedas Avançado</h1>
-    <p class="subtitle">8 moedas mais usadas no mundo + gráfico histórico</p>
-</header>
 
-<main>
-    <div class="card">
-        <input type="number" id="valor" placeholder="Digite o valor" step="0.01">
+    <h1>💱 Conversor de Moedas Avançado</h1>
+    <p>8 moedas mais usadas no mundo</p>
+
+    <div class="container">
+        <input type="number" id="valor" placeholder="Valor" step="0.01">
         
-        <select id="moedaOrigem">
-            <option value="USD">USD - Dólar americano</option>
+        <select id="de">
+            <option value="USD">USD - Dólar Americano</option>
             <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Iene japonês</option>
-            <option value="GBP">GBP - Libra esterlina</option>
-            <option value="AUD">AUD - Dólar australiano</option>
-            <option value="CAD">CAD - Dólar canadense</option>
-            <option value="CHF">CHF - Franco suíço</option>
-            <option value="BRL" selected>BRL - Real brasileiro</option>
+            <option value="JPY">JPY - Iene Japonês</option>
+            <option value="GBP">GBP - Libra Esterlina</option>
+            <option value="AUD">AUD - Dólar Australiano</option>
+            <option value="CAD">CAD - Dólar Canadense</option>
+            <option value="CHF">CHF - Franco Suíço</option>
+            <option value="BRL">BRL - Real Brasileiro</option>
         </select>
-        
-        <select id="moedaDestino">
-            <option value="USD" selected>USD - Dólar americano</option>
+
+        <select id="para">
+            <option value="USD">USD - Dólar Americano</option>
             <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Iene japonês</option>
-            <option value="GBP">GBP - Libra esterlina</option>
-            <option value="AUD">AUD - Dólar australiano</option>
-            <option value="CAD">CAD - Dólar canadense</option>
-            <option value="CHF">CHF - Franco suíço</option>
-            <option value="BRL">BRL - Real brasileiro</option>
+            <option value="JPY">JPY - Iene Japonês</option>
+            <option value="GBP">GBP - Libra Esterlina</option>
+            <option value="AUD">AUD - Dólar Australiano</option>
+            <option value="CAD">CAD - Dólar Canadense</option>
+            <option value="CHF">CHF - Franco Suíço</option>
+            <option value="BRL">BRL - Real Brasileiro</option>
         </select>
-        
+
+        <br>
         <button onclick="converter()">Converter</button>
-        <h2 id="resultado"></h2>
-        <p id="cotacao"></p>
+        <div id="resultado"></div>
     </div>
 
-    <canvas id="grafico" width="400" height="200"></canvas>
-</main>
+    <script>
+        async function converter() {
+            let valor = document.getElementById("valor").value;
+            let de = document.getElementById("de").value;
+            let para = document.getElementById("para").value;
+            let resultado = document.getElementById("resultado");
 
-<footer>
-    <p><a href="index.html">⬅ Voltar ao Portfólio</a></p>
-    <p>© 2025 Henrique - Todos os direitos reservados</p>
-</footer>
+            if (valor === "" || valor <= 0) {
+                resultado.innerHTML = "<span class='erro'>Digite um valor válido!</span>";
+                return;
+            }
 
-<script>
-    async function converter() {
-        const valor = parseFloat(document.getElementById('valor').value);
-        const origem = document.getElementById('moedaOrigem').value;
-        const destino = document.getElementById('moedaDestino').value;
-        const resultadoEl = document.getElementById('resultado');
-        const cotacaoEl = document.getElementById('cotacao');
+            try {
+                let url = `https://api.exchangerate.host/convert?from=${de}&to=${para}&amount=${valor}`;
+                let resposta = await fetch(url);
+                let dados = await resposta.json();
 
-        if (isNaN(valor) || valor <= 0) {
-            resultadoEl.textContent = "⚠️ Digite um valor válido.";
-            return;
-        }
-
-        if (origem === destino) {
-            resultadoEl.textContent = "As moedas selecionadas são iguais.";
-            return;
-        }
-
-        try {
-            const res = await fetch(`https://api.exchangerate.host/latest?base=${origem}&symbols=${destino}`);
-            const data = await res.json();
-            const taxa = data.rates[destino];
-            const convertido = (valor * taxa).toFixed(2);
-
-            resultadoEl.textContent = `${destino} ${convertido}`;
-            cotacaoEl.textContent = `💱 1 ${origem} = ${destino} ${taxa.toFixed(4)}`;
-
-            carregarGrafico(origem, destino);
-        } catch (err) {
-            resultadoEl.textContent = "❌ Erro ao obter a cotação.";
-        }
-    }
-
-    async function carregarGrafico(origem, destino) {
-        const hoje = new Date();
-        const inicio = new Date();
-        inicio.setDate(hoje.getDate() - 7);
-        
-        const startDate = inicio.toISOString().split('T')[0];
-        const endDate = hoje.toISOString().split('T')[0];
-
-        try {
-            const res = await fetch(`https://api.exchangerate.host/timeseries?start_date=${startDate}&end_date=${endDate}&base=${origem}&symbols=${destino}`);
-            const data = await res.json();
-
-            const labels = Object.keys(data.rates);
-            const valores = Object.values(data.rates).map(rate => rate[destino]);
-
-            new Chart(document.getElementById('grafico'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: `Variação ${origem} → ${destino}`,
-                        data: valores,
-                        borderColor: '#00ff99',
-                        backgroundColor: 'rgba(0,255,153,0.1)',
-                        fill: true,
-                        tension: 0.2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { labels: { color: '#fff' } }
-                    },
-                    scales: {
-                        x: { ticks: { color: '#fff' } },
-                        y: { ticks: { color: '#fff' } }
-                    }
+                if (dados.result) {
+                    resultado.innerHTML = `💰 ${valor} ${de} = <strong>${dados.result.toFixed(2)} ${para}</strong>`;
+                } else {
+                    resultado.innerHTML = "<span class='erro'>Erro ao obter a cotação.</span>";
                 }
-            });
-        } catch (err) {
-            console.error("Erro ao carregar gráfico", err);
+            } catch (error) {
+                resultado.innerHTML = "<span class='erro'>Falha na conexão com a API.</span>";
+            }
         }
-    }
-</script>
+    </script>
+
 </body>
 </html>
