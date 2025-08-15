@@ -6,62 +6,116 @@
     <title>Conversor de Moedas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: white;
-            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         header {
             padding: 30px 20px;
+            text-align: center;
         }
         h1 {
             color: #00ff99;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            color: #bbb;
+            font-size: 1rem;
+            margin: 0;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: #1a1a1a;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+            max-width: 350px;
+            width: 100%;
+            text-align: center;
         }
         input, select, button {
-            padding: 10px;
-            margin: 10px;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
             font-size: 1em;
-            border-radius: 5px;
+            border-radius: 6px;
             border: none;
+            outline: none;
+        }
+        input, select {
+            background: #262626;
+            color: #fff;
         }
         button {
             background-color: #00ff99;
-            cursor: pointer;
+            color: #000;
             font-weight: bold;
+            transition: background 0.2s ease;
         }
         button:hover {
             background-color: #00cc77;
         }
+        h2#resultado {
+            margin-top: 15px;
+            color: #00ff99;
+            font-size: 1.5rem;
+        }
+        p#cotacao {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
         footer {
             background: #000;
-            padding: 10px;
-            font-size: 0.9em;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.85rem;
             color: #aaa;
-            margin-top: 40px;
+        }
+        footer a {
+            color: #00ff99;
+            text-decoration: none;
+        }
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <h1>💵 Conversor de Moedas</h1>
-        <p>Converta entre Real (BRL) e Dólar (USD)</p>
+        <p class="subtitle">Converta entre Real (BRL) e Dólar (USD)</p>
     </header>
 
     <main>
-        <input type="number" id="valor" placeholder="Digite o valor" step="0.01">
-        <select id="tipoConversao">
-            <option value="BRLtoUSD">BRL ➡ USD</option>
-            <option value="USDtoBRL">USD ➡ BRL</option>
-        </select>
-        <button onclick="converter()">Converter</button>
-        <h2 id="resultado"></h2>
-        <p style="color:#aaa; font-size:0.9em;" id="cotacao"></p>
+        <div class="card">
+            <input type="number" id="valor" placeholder="Digite o valor" step="0.01">
+            <select id="tipoConversao">
+                <option value="BRLtoUSD">BRL ➡ USD</option>
+                <option value="USDtoBRL">USD ➡ BRL</option>
+            </select>
+            <button onclick="converter()">Converter</button>
+            <h2 id="resultado"></h2>
+            <p id="cotacao"></p>
+        </div>
     </main>
 
     <footer>
-        <p><a href="index.html" style="color:#00ff99;">⬅ Voltar ao Portfólio</a></p>
+        <p><a href="index.html">⬅ Voltar ao Portfólio</a></p>
         <p>© 2025 Henrique - Todos os direitos reservados</p>
     </footer>
 
@@ -75,7 +129,7 @@
                 taxa = parseFloat(data.USDBRL.bid);
                 document.getElementById("cotacao").textContent = `💱 Cotação atual: 1 USD = R$ ${taxa.toFixed(2)}`;
             } catch (error) {
-                document.getElementById("cotacao").textContent = "Não foi possível obter a cotação atual.";
+                document.getElementById("cotacao").textContent = "❌ Não foi possível obter a cotação atual.";
             }
         }
 
@@ -85,7 +139,7 @@
             let resultado = '';
 
             if (isNaN(valor) || valor <= 0) {
-                resultado = "Digite um valor válido.";
+                resultado = "⚠️ Digite um valor válido.";
             } else {
                 if (tipo === "BRLtoUSD") {
                     resultado = `USD $${(valor / taxa).toFixed(2)}`;
