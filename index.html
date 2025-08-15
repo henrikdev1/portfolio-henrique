@@ -1,116 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Henrique - Portfólio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1e1e1e);
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header {
-      padding: 60px 20px;
-    }
-    header h1 {
-      font-size: 3em;
-      background: linear-gradient(90deg, #ffcc00, #ff6600);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 2s infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ffcc00; }
-      to { text-shadow: 0 0 20px #ff6600; }
-    }
-    section {
-      padding: 40px 20px;
-    }
-    .box {
-      background: #222;
-      max-width: 700px;
-      margin: 0 auto 40px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
-    .box h2 {
-      font-size: 2em;
-      color: #00ff99;
-      margin-bottom: 20px;
-    }
-    .box p {
-      font-size: 1.1em;
-      color: #ccc;
-      line-height: 1.6;
-    }
-    .box a {
-      color: #00ff99;
-      text-decoration: none;
-    }
-    .box a:hover {
-      text-decoration: underline;
-    }
-    .project {
-      background: #222;
-      margin: 0 auto 20px;
-      padding: 15px;
-      border-radius: 8px;
-      max-width: 600px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    }
-    .project a {
-      font-size: 1.2em;
-      color: #00ff99;
-      text-decoration: none;
-    }
-    .project span {
-      color: #ccc;
-      display: block;
-      margin-top: 5px;
-    }
-    footer {
-      padding: 20px;
-      color: #666;
-      font-size: 0.9em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henrique - Portfólio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            padding: 40px 20px;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5em;
+            color: #00ff99;
+        }
+        section {
+            padding: 40px 20px;
+        }
+        a {
+            color: #00ff99;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #00cc77;
+        }
+        footer {
+            background: #000;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Henrique</h1>
-    <p>Bem-vindo ao meu portfólio!</p>
-  </header>
+    <header>
+        <h1>Henrique</h1>
+        <p>Bem-vindo ao meu portfólio!</p>
+    </header>
 
-  <section id="sobre">
-    <div class="box">
-      <h2>👋 Sobre Mim</h2>
-      <p>
-        Olá! Meu nome é <strong>Henrique</strong> e este é o meu portfólio. Sou apaixonado por tecnologia e programação, e adoro criar ferramentas úteis que facilitem a vida das pessoas.
-      </p>
-      <p>
-        Aqui você vai encontrar projetos que desenvolvi para treinar minhas habilidades e compartilhar com o mundo.
-      </p>
-      <p>
-        📩 Contato: <a href="mailto:devshenrik1@gmail.com">devshenrik1@gmail.com</a>
-      </p>
-    </div>
-  </section>
+    <section id="projetos">
+        <h2>Projetos</h2>
+        <p>
+            <a href="gerador-senhas.html">🔐 Gerador de Senhas</a> — ferramenta simples para criar senhas fortes.
+        </p>
+        <p>
+            <a href="conversor-moedas.html">💵 Conversor de Moedas</a> — ferramenta para conversão BRL ↔ USD.
+        </p>
+    </section>
 
-  <section id="projetos">
-    <h2 style="color: #00ff99;">🚀 Projetos</h2>
-    <div class="project">
-      <a href="https://codepen.io/henrikdev1/pen/MYarOgJ" target="_blank">🔐 Gerador de Senhas</a>
-      <span>Ferramenta simples para criar senhas fortes e seguras.</span>
-    </div>
-  </section>
+    <section id="contato">
+        <h2>Contato</h2>
+        <p>Email: <a href="mailto:devshenrik1@gmail.com">devshenrik1@gmail.com</a></p>
+    </section>
 
-  <footer>
-    © 2025 Henrique. Todos os direitos reservados.
-  </footer>
+    <footer>
+        <p>© 2025 Henrique - Todos os direitos reservados</p>
+    </footer>
 </body>
 </html>
