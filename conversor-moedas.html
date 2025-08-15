@@ -3,108 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor de Moedas Simples</title>
+    <title>Conversor de Moedas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #0d0d0d;
             color: white;
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding: 50px;
-        }
-        .container {
-            background-color: #111;
             padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0px 0px 15px rgba(0,255,100,0.5);
         }
-        input, select, button {
-            margin: 10px;
+        h1 {
+            color: #00ff88;
+        }
+        select, input, button {
             padding: 10px;
+            margin: 5px;
             font-size: 16px;
             border-radius: 5px;
             border: none;
         }
         button {
             background-color: #00ff88;
-            font-weight: bold;
+            color: black;
             cursor: pointer;
         }
         button:hover {
-            background-color: #00ffaa;
+            background-color: #00cc6a;
         }
         #resultado {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 18px;
         }
-        .erro {
-            color: red;
-            font-weight: bold;
+        canvas {
+            margin-top: 30px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-
-    <h1>💱 Conversor de Moedas</h1>
+    <h1>Conversor de Moedas</h1>
     <p>USD, EUR, JPY, GBP e BRL</p>
 
-    <div class="container">
-        <input type="number" id="valor" placeholder="Valor" step="0.01">
-        
-        <select id="de">
-            <option value="USD">USD - Dólar Americano</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Iene Japonês</option>
-            <option value="GBP">GBP - Libra Esterlina</option>
-            <option value="BRL">BRL - Real Brasileiro</option>
-        </select>
+    <input type="number" id="valor" placeholder="Digite o valor">
+    <select id="moedaDe">
+        <option value="USD">USD - Dólar Americano</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="JPY">JPY - Iene Japonês</option>
+        <option value="GBP">GBP - Libra Esterlina</option>
+        <option value="BRL">BRL - Real Brasileiro</option>
+    </select>
+    <select id="moedaPara">
+        <option value="BRL">BRL - Real Brasileiro</option>
+        <option value="USD">USD - Dólar Americano</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="JPY">JPY - Iene Japonês</option>
+        <option value="GBP">GBP - Libra Esterlina</option>
+    </select>
+    <button onclick="converter()">Converter</button>
 
-        <select id="para">
-            <option value="USD">USD - Dólar Americano</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Iene Japonês</option>
-            <option value="GBP">GBP - Libra Esterlina</option>
-            <option value="BRL">BRL - Real Brasileiro</option>
-        </select>
-
-        <br>
-        <button onclick="converter()">Converter</button>
-        <div id="resultado"></div>
-    </div>
+    <div id="resultado"></div>
+    <canvas id="grafico" width="400" height="200"></canvas>
 
     <script>
+        let chart;
+
         async function converter() {
-            let valor = document.getElementById("valor").value;
-            let de = document.getElementById("de").value;
-            let para = document.getElementById("para").value;
-            let resultado = document.getElementById("resultado");
+            const valor = document.getElementById("valor").value;
+            const moedaDe = document.getElementById("moedaDe").value;
+            const moedaPara = document.getElementById("moedaPara").value;
+            const resultadoDiv = document.getElementById("resultado");
 
-            if (valor === "" || valor <= 0) {
-                resultado.innerHTML = "<span class='erro'>Digite um valor válido!</span>";
-                return;
-            }
-
-            if (de === para) {
-                resultado.innerHTML = `💰 ${valor} ${de} = <strong>${valor} ${para}</strong>`;
+            if (!valor) {
+                resultadoDiv.innerHTML = "Digite um valor!";
                 return;
             }
 
             try {
-                let url = `https://api.frankfurter.app/latest?amount=${valor}&from=${de}&to=${para}`;
-                let resposta = await fetch(url);
-                let dados = await resposta.json();
+                // Conversão atual
+                const res = await fetch(`https://api.frankfurter.app/latest?amount=${valor}&from=${moedaDe}&to=${moedaPara}`);
+                const data = await res.json();
+                const convertido = data.rates[moedaPara].toFixed(2);
 
-                if (dados.rates && dados.rates[para]) {
-                    resultado.innerHTML = `💰 ${valor} ${de} = <strong>${dados.rates[para].toFixed(2)} ${para}</strong>`;
-                } else {
-                    resultado.innerHTML = "<span class='erro'>Erro ao obter a cotação.</span>";
-                }
+                resultadoDiv.innerHTML = `💰 ${valor} ${moedaDe} = <b>${convertido} ${moedaPara}</b>`;
+
+                // Pega data de 30 dias atrás
+                const hoje = new Date();
+                const inicio = new Date();
+                inicio.setDate(hoje.getDate() - 30);
+
+                const dataInicio = inicio.toISOString().split('T')[0];
+                const dataFim = hoje.toISOString().split('T')[0];
+
+                // Busca histórico
+                const histRes = await fetch(`https://api.frankfurter.app/${dataInicio}..${dataFim}?from=${moedaDe}&to=${moedaPara}`);
+                const histData = await histRes.json();
+
+                const labels = Object.keys(histData.rates);
+                const valores = labels.map(d => histData.rates[d][moedaPara]);
+
+                // Desenha gráfico
+                if (chart) chart.destroy();
+                const ctx = document.getElementById('grafico').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: `Variação de ${moedaDe} para ${moedaPara}`,
+                            data: valores,
+                            borderColor: '#00ff88',
+                            backgroundColor: 'rgba(0, 255, 136, 0.2)',
+                            fill: true,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { ticks: { color: 'white' } },
+                            y: { ticks: { color: 'white' } }
+                        },
+                        plugins: {
+                            legend: { labels: { color: 'white' } }
+                        }
+                    }
+                });
+
             } catch (error) {
-                resultado.innerHTML = "<span class='erro'>Falha na conexão com a API.</span>";
+                resultadoDiv.innerHTML = "❌ Erro ao obter a cotação.";
             }
         }
     </script>
-
 </body>
 </html>
