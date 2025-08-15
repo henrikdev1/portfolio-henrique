@@ -57,6 +57,7 @@
         </select>
         <button onclick="converter()">Converter</button>
         <h2 id="resultado"></h2>
+        <p style="color:#aaa; font-size:0.9em;" id="cotacao"></p>
     </main>
 
     <footer>
@@ -65,10 +66,22 @@
     </footer>
 
     <script>
+        let taxa = 5; // valor padrão até carregar API
+
+        async function carregarCotacao() {
+            try {
+                const res = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL");
+                const data = await res.json();
+                taxa = parseFloat(data.USDBRL.bid);
+                document.getElementById("cotacao").textContent = `💱 Cotação atual: 1 USD = R$ ${taxa.toFixed(2)}`;
+            } catch (error) {
+                document.getElementById("cotacao").textContent = "Não foi possível obter a cotação atual.";
+            }
+        }
+
         function converter() {
             const valor = parseFloat(document.getElementById('valor').value);
             const tipo = document.getElementById('tipoConversao').value;
-            const taxa = 5; // 1 USD = 5 BRL (taxa fixa de exemplo)
             let resultado = '';
 
             if (isNaN(valor) || valor <= 0) {
@@ -82,6 +95,8 @@
             }
             document.getElementById('resultado').innerText = resultado;
         }
+
+        carregarCotacao();
     </script>
 </body>
 </html>
