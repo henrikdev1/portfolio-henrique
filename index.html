@@ -6,37 +6,66 @@
     <title>Henrique - Portfólio</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: white;
-            text-align: center;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #0d0d0d;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
         }
         header {
-            padding: 40px 20px;
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #00ff88, #00ffaa33);
         }
-        h1 {
-            margin-top: 20px;
-            font-size: 2.5em;
-            color: #00ff99;
+        header h1 {
+            font-size: 3rem;
+            color: #0d0d0d;
+            font-weight: bold;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #0d0d0d;
         }
         section {
+            max-width: 900px;
+            margin: auto;
             padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h2 {
+            color: #00ff88;
+            border-bottom: 2px solid #00ff88;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
         }
         a {
-            color: #00ff99;
+            color: #00ff88;
             text-decoration: none;
             font-weight: bold;
         }
         a:hover {
-            color: #00cc77;
+            color: #00ffaa;
+        }
+        .card {
+            background-color: #1a1a1a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ff8844;
+            text-align: left;
+        }
+        .emoji {
+            font-size: 1.3rem;
+            margin-right: 5px;
         }
         footer {
-            background: #000;
-            padding: 10px;
-            font-size: 0.9em;
-            color: #aaa;
+            text-align: center;
+            padding: 20px;
+            background-color: #111;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #222;
         }
     </style>
 </head>
@@ -46,14 +75,27 @@
         <p>Bem-vindo ao meu portfólio!</p>
     </header>
 
+    <section id="sobre">
+        <h2>Sobre Mim</h2>
+        <p>
+            Olá! Meu nome é Henrique, sou apaixonado por tecnologia e desenvolvimento web.
+            Sempre busco aprender novas ferramentas e transformar ideias em projetos reais.
+            Meu objetivo é evoluir constantemente e criar soluções digitais que ajudem pessoas.
+        </p>
+    </section>
+
     <section id="projetos">
         <h2>Projetos</h2>
-        <p>
-            <a href="gerador-senhas.html">🔐 Gerador de Senhas</a> — ferramenta simples para criar senhas fortes.
-        </p>
-        <p>
-            <a href="conversor-moedas.html">💵 Conversor de Moedas</a> — ferramenta para conversão BRL ↔ USD.
-        </p>
+
+        <div class="card">
+            <span class="emoji">🔐</span>
+            <a href="gerador-senhas.html">Gerador de Senhas</a> — ferramenta simples para criar senhas fortes.
+        </div>
+
+        <div class="card">
+            <span class="emoji">💵</span>
+            <a href="conversor-moedas.html">Conversor de Moedas</a> — ferramenta para conversão BRL ↔ USD.
+        </div>
     </section>
 
     <section id="contato">
@@ -62,7 +104,7 @@
     </section>
 
     <footer>
-        <p>© 2025 Henrique - Todos os direitos reservados</p>
+        © 2025 Henrique - Todos os direitos reservados.
     </footer>
 </body>
 </html>
