@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor de Moedas Avançado</title>
+    <title>Conversor de Moedas Simples</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -46,8 +46,8 @@
 </head>
 <body>
 
-    <h1>💱 Conversor de Moedas Avançado</h1>
-    <p>8 moedas mais usadas no mundo</p>
+    <h1>💱 Conversor de Moedas</h1>
+    <p>USD, EUR, JPY, GBP e BRL</p>
 
     <div class="container">
         <input type="number" id="valor" placeholder="Valor" step="0.01">
@@ -57,9 +57,6 @@
             <option value="EUR">EUR - Euro</option>
             <option value="JPY">JPY - Iene Japonês</option>
             <option value="GBP">GBP - Libra Esterlina</option>
-            <option value="AUD">AUD - Dólar Australiano</option>
-            <option value="CAD">CAD - Dólar Canadense</option>
-            <option value="CHF">CHF - Franco Suíço</option>
             <option value="BRL">BRL - Real Brasileiro</option>
         </select>
 
@@ -68,9 +65,6 @@
             <option value="EUR">EUR - Euro</option>
             <option value="JPY">JPY - Iene Japonês</option>
             <option value="GBP">GBP - Libra Esterlina</option>
-            <option value="AUD">AUD - Dólar Australiano</option>
-            <option value="CAD">CAD - Dólar Canadense</option>
-            <option value="CHF">CHF - Franco Suíço</option>
             <option value="BRL">BRL - Real Brasileiro</option>
         </select>
 
@@ -91,13 +85,18 @@
                 return;
             }
 
+            if (de === para) {
+                resultado.innerHTML = `💰 ${valor} ${de} = <strong>${valor} ${para}</strong>`;
+                return;
+            }
+
             try {
-                let url = `https://api.exchangerate.host/convert?from=${de}&to=${para}&amount=${valor}`;
+                let url = `https://api.frankfurter.app/latest?amount=${valor}&from=${de}&to=${para}`;
                 let resposta = await fetch(url);
                 let dados = await resposta.json();
 
-                if (dados.result) {
-                    resultado.innerHTML = `💰 ${valor} ${de} = <strong>${dados.result.toFixed(2)} ${para}</strong>`;
+                if (dados.rates && dados.rates[para]) {
+                    resultado.innerHTML = `💰 ${valor} ${de} = <strong>${dados.rates[para].toFixed(2)} ${para}</strong>`;
                 } else {
                     resultado.innerHTML = "<span class='erro'>Erro ao obter a cotação.</span>";
                 }
