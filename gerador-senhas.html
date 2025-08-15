@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Senhas | Henrique</title>
+  <style>
+    :root { --bg:#0f0f0f; --card:#1b1b1b; --txt:#fff; --muted:#b3b3b3; --acc:#ff8800; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, sans-serif; background:linear-gradient(135deg,#0f0f0f,#1e1e1e); color:var(--txt); display:flex; min-height:100vh; align-items:center; justify-content:center; padding:24px; }
+    .card { width:100%; max-width:520px; background:var(--card); border-radius:16px; padding:24px; box-shadow:0 8px 24px rgba(0,0,0,.4); }
+    h1 { margin:0 0 12px; font-size:24px; }
+    p { margin:0 0 16px; color:var(--muted); }
+    label { display:block; margin:12px 0 6px; }
+    input[type="range"] { width:100%; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; }
+    .row > label { flex:1 1 180px; display:flex; align-items:center; gap:8px; }
+    .out { margin:16px 0; display:flex; gap:8px; }
+    .out input { flex:1; padding:12px; border:1px solid #333; border-radius:10px; background:#121212; color:#fff; }
+    button { border:0; padding:12px 16px; border-radius:10px; background:var(--acc); color:#000; font-weight:700; cursor:pointer; }
+    button:hover { filter:brightness(1.05); }
+    small { color:var(--muted); }
+    .top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    a { color:#ffcc00; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="top">
+      <h1>Gerador de Senhas</h1>
+      <a href="index.html">← Voltar</a>
+    </div>
+    <p>Crie senhas fortes com um clique.</p>
+
+    <label for="len">Tamanho: <span id="lenVal">12</span></label>
+    <input id="len" type="range" min="6" max="32" value="12" />
+
+    <div class="row">
+      <label><input type="checkbox" id="lower" checked> letras minúsculas</label>
+      <label><input type="checkbox" id="upper" checked> letras MAIÚSCULAS</label>
+      <label><input type="checkbox" id="nums" checked> números</label>
+      <label><input type="checkbox" id="syms"> símbolos</label>
+    </div>
+
+    <div class="out">
+      <input id="out" type="text" placeholder="Sua senha aparecerá aqui" readonly>
+      <button id="copy">Copiar</button>
+    </div>
+
+    <button id="gen" style="width:100%; margin-top:8px;">Gerar Senha</button>
+    <p style="margin-top:12px;"><small>Dica: guarde suas senhas em um gerenciador seguro.</small></p>
+  </div>
+
+  <script>
+    const len = document.getElementById('len');
+    const lenVal = document.getElementById('lenVal');
+    const lower = document.getElementById('lower');
+    const upper = document.getElementById('upper');
+    const nums  = document.getElementById('nums');
+    const syms  = document.getElementById('syms');
+    const out   = document.getElementById('out');
+    const gen   = document.getElementById('gen');
+    const copy  = document.getElementById('copy');
+
+    const L = 'abcdefghijklmnopqrstuvwxyz';
+    const U = L.toUpperCase();
+    const N = '0123456789';
+    const S = '!@#$%^&*()_+-=[]{};:,.<>?';
+
+    len.addEventListener('input', () => lenVal.textContent = len.value);
+
+    function generate() {
+      let pool = '';
+      if (lower.checked) pool += L;
+      if (upper.checked) pool += U;
+      if (nums.checked)  pool += N;
+      if (syms.checked)  pool += S;
+
+      const size = parseInt(len.value, 10);
+      if (!pool) { out.value = 'Selecione ao menos 1 conjunto.'; return; }
+
+      let pwd = '';
+      for (let i = 0; i < size; i++) {
+        pwd += pool[Math.floor(Math.random() * pool.length)];
+      }
+      out.value = pwd;
+    }
+
+    gen.addEventListener('click', generate);
+
+    copy.addEventListener('click', async () => {
+      if (!out.value) return;
+      try {
+        await navigator.clipboard.writeText(out.value);
+        copy.textContent = 'Copiado!';
+        setTimeout(() => copy.textContent = 'Copiar', 1200);
+      } catch(e) {
+        out.select();
+        document.execCommand('copy');
+      }
+    });
+  </script>
+</body>
+</html>
